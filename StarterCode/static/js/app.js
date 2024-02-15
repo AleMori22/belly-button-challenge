@@ -35,9 +35,10 @@ d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1
         
             let selectedMetadata = data.metadata[selectedIndex];
 
-            // 
+            // Generate variable for frequency
 
-            let frequency = selectedMetadata.wfreq ;
+            let frequency = selectedMetadata.wfreq;
+
             console.log(frequency)
 
         // Bar Chart setup
@@ -77,7 +78,8 @@ d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1
             xaxis : { title : "OUT ID"},
             showledgend : false,
             height: 600,
-            width: 1200
+            width: 1200,
+            autosize : true
         };
 
         let bubblechartData = [bubbleTrace];
@@ -85,6 +87,108 @@ d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1
         // Bubble chart display
 
         Plotly.newPlot("bubble", bubblechartData, bubbleLayout);
+
+        // Gauge chart setup
+
+        // Pointer setup
+
+        
+        let degrees = 180 - frequency*20,
+         radius = .8,
+         radians = degrees * Math.PI / 180,
+         x = radius * Math.cos(radians),
+         y = radius * Math.sin(radians),
+         mainPath = 'M -.0 -0.035 L .0 0.035 L ',
+	     pathX = String(x),
+	     space = ' ',
+	     pathY = String(y),
+	    pathEnd = ' Z';
+        
+        let path = mainPath.concat(pathX,space,pathY,pathEnd);
+        console.log(path);
+
+
+        // Gaauge chart variables
+
+        let traceGauge = [{ type: 'scatter',
+            x: [0], y:[0],
+            marker: {size: 18, color:'850000'},
+            showlegend: false,
+            name: 'Frequency',
+            text: frequency,
+            hoverinfo: 'text+name'},
+            {values: [45 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 , 5],
+            rotation: 90,
+            text: [
+                "",
+                "8-9",
+                "7-8",
+                "6-7",
+                "5-6",
+                "4-5",
+                "3-4",
+                "2-3",
+                "1-2",
+                "0-1"
+              ],
+            textinfo: 'text',
+            textposition:'inside',	  
+            marker: {colors:[
+                'rgba(255, 255, 255, 0)',
+                'rgba(133, 180, 138, 1)', 
+                'rgba(138, 187, 143, 1)', 
+                'rgba(140, 191, 136, 1)', 
+                'rgba(183, 204, 146, 1)', 
+                'rgba(213, 228, 157, 1)', 
+                'rgba(229, 231, 179, 1)', 
+                'rgba(233, 230, 202, 1)', 
+                'rgba(244, 241, 229, 1)', 
+                'rgba(248, 243, 236, 1)'
+            ]},
+            hoverinfo: 'label',
+            hole: .3,
+            type: 'pie',
+            showlegend: false
+            
+        }];
+
+        let gaugeLayout = {
+
+            xaxis: {
+                showticklabels: false,
+                showgrid: false,
+                zeroline: false,
+            },
+            yaxis: {
+                showticklabels: false,
+                showgrid: false,
+                zeroline: false,
+            },
+
+            shape: [
+                {
+                    type: 'path',
+                    path: path,
+                    fillcolor: '850000',
+                    line: {
+                        color: '850000'
+                    },
+                    xref: 'paper',
+                    yref: 'paper'
+                }
+            ],
+
+            autosize:true,
+
+            xaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]},
+            yaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]}
+        };
+
+        // Gauge chart display
+
+        Plotly.newPlot("gauge", traceGauge, gaugeLayout);
 
         // Selecting the Demographic Info Table and 
         // Clearing the data from the previous call
