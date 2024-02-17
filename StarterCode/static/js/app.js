@@ -88,24 +88,34 @@ d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1
 
         Plotly.newPlot("bubble", bubblechartData, bubbleLayout);
 
+        
         // Gauge chart setup
+
 
         // Pointer setup
 
+
+        function gaugePointer(value){
+	
+            var degrees = 180 - (value*20),
+             radius = .5;
+        var radians = degrees * Math.PI / 180;
+        var x = radius * Math.cos(radians);
+        var y = radius * Math.sin(radians);
         
-        let degrees = 180 - frequency*20,
-         radius = .8,
-         radians = degrees * Math.PI / 180,
-         x = radius * Math.cos(radians),
-         y = radius * Math.sin(radians),
-         mainPath = 'M -.0 -0.035 L .0 0.035 L ',
-	     pathX = String(x),
-	     space = ' ',
-	     pathY = String(y),
-	    pathEnd = ' Z';
+        // Path: may have to change to create a better triangle
+        var mainPath = 'M -.0 -0.035 L .0 0.035 L ',
+             pathX = String(x),
+             space = ' ',
+             pathY = String(y),
+             pathEnd = ' Z';
+        var path = mainPath.concat(pathX,space,pathY,pathEnd);
+            
+            return path;
         
-        let path = mainPath.concat(pathX,space,pathY,pathEnd);
-        console.log(path);
+        }
+
+
 
 
         // Gaauge chart variables
@@ -152,31 +162,37 @@ d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1
             
         }];
 
-        let gaugeLayout = {
-
-            xaxis: {
-                showticklabels: false,
-                showgrid: false,
-                zeroline: false,
+        var gaugeLayout = {
+            title: {
+                text: "Belly Button washing Frequwncy",
+                font: {
+                    size: 20
+                },
+                x: 0.5,
+                xref: 'paper' 
             },
-            yaxis: {
-                showticklabels: false,
-                showgrid: false,
-                zeroline: false,
-            },
-
-            shape: [
+            annotations: [
                 {
-                    type: 'path',
-                    path: path,
-                    fillcolor: '850000',
-                    line: {
-                        color: '850000'
+                    text: "Scrubs per Week",
+                    showarrow: false,
+                    font: {
+                        size: 16
                     },
-                    xref: 'paper',
-                    yref: 'paper'
+                    x: 0.5, 
+                    y: 1.15, 
+                    xref: 'paper', 
+                    yref: 'paper' 
                 }
             ],
+            
+            shapes:[{
+                type: 'path',
+                path: gaugePointer(frequency),
+                fillcolor: '850000',
+                line: {
+                  color: '850000'
+                }
+              }],
 
             autosize:true,
 
