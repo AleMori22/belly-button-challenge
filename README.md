@@ -1,6 +1,6 @@
 # belly-button-challenge
 
-In the StarterCode folder, you'll find:
+In the **StarterCode** folder, you'll find:
 
 1. The **statistic/js** folder containing the **app.js** file, responsible for:
     1. Visualizing the *Top 10 OUTs* bar, *Belly Button Washing Frequency* gauge, and *OUT ID* bubble charts.
