@@ -8,3 +8,5 @@ In the StarterCode folder, you'll find:
     3. Loading the dropdown window with the *Test Subject ID No.:* containing the IDs of the patients in the dataset.
 2. The **index.html** file that opens a web page, loads the **samples.json** file where the visualization data is located, and runs the **app.js** script.
 3. The **samples.json** file containing the data for visualization.
+
+All the code you'll find is being done by me starting from the code provided, with the help of the class materials and the ones provided by the assignment.
